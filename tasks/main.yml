@@ -1,0 +1,28 @@
+# vim: set ft=ansible
+# AMD64: Filebeat 6, ARM64: Filebeat 7
+- name: Finalize filebeat facts for ansible_architecture
+  ansible.builtin.set_fact:
+    _filebeat: "{{ (ansible_architecture == 'x86_64') | ternary(_filebeat_6, _filebeat_7) }}"
+
+- name: Install Elastic.co package key
+  ansible.builtin.apt_key:
+    id: "{{ _filebeat.apt.key_id }}"
+    url: "{{ _filebeat.apt.key_url }}"
+    state: present
+
+- name: Add Elastic.co repository
+  ansible.builtin.apt_repository:
+    repo: "{{ _filebeat.apt.repo_line }}"
+    state: present
+
+- name: Install Filebeat
+  ansible.builtin.apt:
+    name: "{{ _filebeat.apt.package.name }}={{ _filebeat.apt.package.version }}"
+    state: present
+
+  # Configuration not present during Packer run
+- name: Configure Service to NOT autostart
+  ansible.builtin.service:
+    name: filebeat
+    state: stopped
+    enabled: no
