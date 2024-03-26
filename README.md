@@ -38,7 +38,7 @@ Including an example of how to use your role (for instance, with variables passe
         FILEBEAT:
           ...
       roles:
-         - { role: filebeat, tags: [ 'filebeat' ], _filebeat: "{{ FILEBEAT }}" }
+         - { role: filebeat, tags: [ 'filebeat' ], _filebeat_install: "{{ FILEBEAT }}" }
 
 License
 -------
