@@ -1,13 +1,4 @@
-_filebeat_6:
-  apt:
-    repo_line: "deb https://artifacts.elastic.co/packages/6.x/apt stable main"
-    key_id: D88E42B4
-    key_url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
-    package:
-      name: "filebeat"
-      version: "6.8.23"
-
-_filebeat_7:
+_filebeat_install:
   apt:
     repo_line: "deb https://artifacts.elastic.co/packages/7.x/apt stable main"
     key_id: D88E42B4
