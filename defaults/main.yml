@@ -1,8 +1,12 @@
 _filebeat_install:
   apt:
-    repo_line: "deb https://artifacts.elastic.co/packages/7.x/apt stable main"
-    key_id: D88E42B4
-    key_url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    deb822_repository:
+      - name: elastic
+        types: deb
+        uris: https://artifacts.elastic.co/packages/7.x/apt
+        suites: stable
+        components: main
+        signed_by: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     package:
       name: "filebeat"
       version: "7.17.18"

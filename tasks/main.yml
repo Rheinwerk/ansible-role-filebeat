@@ -1,20 +1,21 @@
 ---
 
-- name: Install Elastic.co package key
-  ansible.builtin.apt_key:
-    id: "{{ _filebeat_install.apt.key_id }}"
-    url: "{{ _filebeat_install.apt.key_url }}"
-    state: present
-
-- name: Add Elastic.co repository
-  ansible.builtin.apt_repository:
-    repo: "{{ _filebeat_install.apt.repo_line }}"
-    state: present
+- name: Add Deb822 Repos
+  ansible.builtin.deb822_repository:
+    name: "{{ item.name }}"
+    types: deb
+    uris: "{{ item.uris }}"
+    suites: "{{ item.suites }}"
+    components: "{{ item.components }}"
+    signed_by: "{{ item.signed_by }}"
+  when: item.name is defined
+  with_items: "{{ _filebeat_install.apt.deb822_repository | default([]) }}"
 
 - name: Install Filebeat
   ansible.builtin.apt:
     name: "{{ _filebeat_install.apt.package.name }}={{ _filebeat_install.apt.package.version }}"
     state: present
+    update_cache: true
 
   # Configuration not present during Packer run
 - name: Configure Service to NOT autostart
