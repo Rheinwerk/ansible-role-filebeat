@@ -1,8 +1,7 @@
 ---
 galaxy_info:
-  author: Michael Schmitz
+  author: rheinwerk
   role_name: filebeat
-  namespace: rheinwerk
   description: Installs Filebeat
   license: license (GPLv3)
   min_ansible_version: 2.10.0
